@@ -3,3 +3,4 @@ dist/
 build/
 coverage/
 *.d.ts
+vite.config.js

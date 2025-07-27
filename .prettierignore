@@ -4,3 +4,4 @@ build/
 coverage/
 *.d.ts
 vite.config.js
+async-race-api/

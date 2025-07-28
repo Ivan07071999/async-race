@@ -1,0 +1,120 @@
+.header-form-top,
+.header-form-bottom,
+.footer-form {
+  box-sizing: content-box;
+  padding: 1rem;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  box-shadow: 0 0 .4vw rgba(94, 91, 91, 0.5), 0 0 0 .15vw transparent;
+  gap: 10px;
+}
+
+.header-form-middle {
+  box-sizing: content-box;
+  display: grid;
+  grid-template-columns: 100px 30px 70px;
+  grid-template-rows: 30px 30px;
+  padding: 10px;
+  box-shadow: 0 0 .4vw rgba(94, 91, 91, 0.5), 0 0 0 .15vw transparent;
+  border-radius: 1rem;
+  gap: 10px;
+}
+
+.button-next,
+.button-prev,
+.button-generateCars,
+.button-update,
+.button-create,
+.button-reset,
+.button-race,
+.winners-button,
+.garage-button {
+  height: 30px;
+  appearance: none;
+  background-color: transparent;
+  border: 0.125em solid #fff;
+  border-radius: 0.9375em;
+  box-sizing: content-box;
+  color: #a19c9c;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  line-height: normal;
+  margin: 0;
+  padding: 0px 10px 0px 10px;
+  outline: none;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+.button-next:hover,
+.button-prev:hover,
+.button-generateCars:hover,
+.button-update:hover,
+.button-create:hover,
+.button-reset:hover,
+.button-race:hover,
+.winners-button:hover,
+.winners-button:hover,
+.garage-button:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-next:active,
+.button-prev:active,
+.button-generateCars:active,
+.button-update:active,
+.button-create:active,
+.button-reset:active,
+.button-race:active,
+.winners-button:active,
+.garage-button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.input {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  font-weight: 500;
+  font-size: .8vw;
+  color: #fff;
+  background-color: rgb(28,28,30);
+  box-shadow: 0 0 .4vw rgba(0,0,0,0.5), 0 0 0 .15vw transparent;
+  border-radius: 0.4vw;
+  border: none;
+  outline: none;
+  padding: 0.4vw;
+  max-width: 190px;
+  transition: .4s;
+}
+
+.input:hover {
+  box-shadow: 0 0 0 .15vw rgba(190, 219, 231, 0.186);
+}
+
+.input:focus {
+  box-shadow: 0 0 0 .15vw rgb(189, 199, 202);
+}
+
+.label {
+  appearance: none;
+  background-color: transparent;
+  border: 0.125em solid #fff;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
+  color: #a19c9c;
+  cursor: pointer;
+  display: inline-block;
+}

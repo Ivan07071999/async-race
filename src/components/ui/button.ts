@@ -1,3 +1,5 @@
+import createNewCar from '../../utils/formatters';
+
 type ButtonsType = {
   winners: HTMLButtonElement;
   garage: HTMLButtonElement;
@@ -8,6 +10,10 @@ type ButtonsType = {
   update: HTMLButtonElement;
   next: HTMLButtonElement;
   prev: HTMLButtonElement;
+  select: HTMLButtonElement;
+  remove: HTMLButtonElement;
+  a: HTMLButtonElement;
+  b: HTMLButtonElement;
 };
 
 export function createButton(
@@ -29,10 +35,17 @@ export function createHeaderButtons(): ButtonsType {
     'Generate cars',
     'button-generateCars'
   );
+
   const createCarButton = createButton('Create', 'button-create');
   const updateCarButton = createButton('Update', 'button-update');
   const nextButton = createButton('Next', 'button-next');
   const prevButton = createButton('Prev', 'button-prev');
+  const selectCarButton = createButton('Select', 'button-select');
+  const removeCarButton = createButton('Remove', 'button-remove');
+  const A = createButton('A', 'button-car-logic');
+  const B = createButton('B', 'button-car-logic');
+
+  createCarButton.addEventListener('click', () => createNewCar());
 
   return {
     winners: winnersButton,
@@ -44,5 +57,9 @@ export function createHeaderButtons(): ButtonsType {
     update: updateCarButton,
     next: nextButton,
     prev: prevButton,
+    select: selectCarButton,
+    remove: removeCarButton,
+    a: A,
+    b: B,
   };
 }

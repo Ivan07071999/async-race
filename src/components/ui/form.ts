@@ -1,12 +1,12 @@
 type FormType = {
-  headerTop: HTMLFormElement;
-  headerMiddle: HTMLFormElement;
-  headerBottom: HTMLFormElement;
-  footerForm: HTMLFormElement;
+  headerTop: HTMLDivElement;
+  headerMiddle: HTMLDivElement;
+  headerBottom: HTMLDivElement;
+  footerForm: HTMLDivElement;
 };
 
-function createFormElement(formClass: string): HTMLFormElement {
-  const form = document.createElement('form');
+function createFormElement(formClass: string): HTMLDivElement {
+  const form = document.createElement('div');
   form.className = formClass;
   return form;
 }

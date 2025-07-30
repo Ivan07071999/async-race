@@ -3,6 +3,9 @@ import { createHeaderButtons } from './components/ui/button';
 import createFooter from './components/layout/footer';
 import { createForm } from './components/ui/form';
 import { createLabelAndInput } from './components/ui/input';
+import getCars from './store/garage/garageThunks';
+import { type ICar } from './store/garage/garageThunks';
+import createGaragePage from './features/garage/garagePage';
 
 const container = document.querySelector('#app');
 const header = createHeader();
@@ -10,9 +13,11 @@ const footer = createFooter();
 const buttons = createHeaderButtons();
 const form = createForm();
 const createLabelAndInputElement = createLabelAndInput();
+const GARAGE = createGaragePage();
 
-function appendTo(): void {
+async function appendTo(): Promise<void> {
   container?.appendChild(header);
+  container?.appendChild(await GARAGE);
   container?.appendChild(footer);
   header.appendChild(form.headerTop);
   header.appendChild(form.headerMiddle);
@@ -35,6 +40,7 @@ function appendTo(): void {
 
   form.footerForm.appendChild(buttons.prev);
   form.footerForm.appendChild(buttons.next);
+  getCars<ICar[]>();
 }
 
 export default appendTo;

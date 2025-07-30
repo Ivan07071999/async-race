@@ -22,7 +22,8 @@
   border-radius: 1rem;
   gap: 10px;
 }
-
+.button-change,
+.button-control,
 .button-next,
 .button-prev,
 .button-generateCars,
@@ -36,7 +37,7 @@
   appearance: none;
   background-color: transparent;
   border: 0.125em solid #fff;
-  border-radius: 0.9375em;
+  border-radius: 0.5rem;
   box-sizing: content-box;
   color: #a19c9c;
   cursor: pointer;
@@ -56,6 +57,8 @@
   will-change: transform;
 }
 
+.button-change:hover,
+.button-control:hover,
 .button-next:hover,
 .button-prev:hover,
 .button-generateCars:hover,
@@ -72,6 +75,8 @@
   transform: translateY(-2px);
 }
 
+.button-change:active,
+.button-control:active,
 .button-next:active,
 .button-prev:active,
 .button-generateCars:active,
@@ -108,7 +113,9 @@
   box-shadow: 0 0 0 .15vw rgb(189, 199, 202);
 }
 
-.label {
+.inputColor {
+  width: 30px;
+  height: 30px;
   appearance: none;
   background-color: transparent;
   border: 0.125em solid #fff;

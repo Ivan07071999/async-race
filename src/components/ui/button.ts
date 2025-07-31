@@ -1,4 +1,5 @@
 import createNewCar from '../../utils/formatters';
+import { updateCar } from '../../utils/validator';
 
 type ButtonsType = {
   winners: HTMLButtonElement;
@@ -46,6 +47,7 @@ export function createHeaderButtons(): ButtonsType {
   const B = createButton('B', 'button-car-logic');
 
   createCarButton.addEventListener('click', () => createNewCar());
+  updateCarButton.addEventListener('click', () => updateCar());
 
   return {
     winners: winnersButton,

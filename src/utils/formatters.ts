@@ -19,8 +19,6 @@ async function createNewCar() {
       id: carList.length + 1,
     };
 
-    console.log('create');
-
     carsContainer?.appendChild(
       await createCarItem(newCar.name, newCar.color, newCar.id)
     );

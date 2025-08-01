@@ -1,5 +1,12 @@
 import createNewCar from '../../utils/formatters';
 import { updateCar } from '../../utils/validator';
+import {
+  pushCarsInCarsArray,
+  createCarsPage,
+  garagePages,
+} from '../../features/garage/garageCreateCars';
+import clearCarsContainer from '../../utils/clear';
+// import clearCarsContainer from '../../utils/clear';
 
 type ButtonsType = {
   winners: HTMLButtonElement;
@@ -36,7 +43,6 @@ export function createHeaderButtons(): ButtonsType {
     'Generate cars',
     'button-generateCars'
   );
-
   const createCarButton = createButton('Create', 'button-create');
   const updateCarButton = createButton('Update', 'button-update');
   const nextButton = createButton('Next', 'button-next');
@@ -48,6 +54,29 @@ export function createHeaderButtons(): ButtonsType {
 
   createCarButton.addEventListener('click', () => createNewCar());
   updateCarButton.addEventListener('click', () => updateCar());
+  generateCarsButton.addEventListener('click', () => {
+    pushCarsInCarsArray()
+      .then(() => clearCarsContainer())
+      .then(() => createCarsPage(garagePages.PAGE_NUMBER))
+      .then(() => {
+        console.log('Все операции выполнены успешно');
+      })
+      .catch(error => {
+        console.error('Произошла ошибка:', error);
+      });
+  });
+
+  nextButton.addEventListener('click', () => {
+    clearCarsContainer();
+    garagePages.PAGE_NUMBER += 1;
+    createCarsPage(garagePages.PAGE_NUMBER);
+  });
+
+  prevButton.addEventListener('click', () => {
+    clearCarsContainer();
+    garagePages.PAGE_NUMBER -= 1;
+    createCarsPage(garagePages.PAGE_NUMBER);
+  });
 
   return {
     winners: winnersButton,

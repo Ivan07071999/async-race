@@ -9,15 +9,20 @@ export const garagePages = {
 };
 
 export async function createCarsPage(page: number) {
+  const carsLength = document.querySelector('h1') as HTMLElement;
+  carsLength.textContent = `Garage(${(await carsArray).length})`;
+
+  const pageNumber = document.querySelector('h3') as HTMLElement;
+  pageNumber.textContent = `Page #${garagePages.PAGE_NUMBER + 1}`;
   const clearedCarsContainer =
     document.querySelector<HTMLDivElement>('.form-car')!;
-  const currentPAge = (await carsArray).slice(page, page + 7);
+  const currentPAge = (await carsArray).slice(page * 7, page * 7 + 7);
   console.log(currentPAge);
 
   const carElements = await Promise.all(
-    currentPAge.map(async car =>
+    currentPAge.map(async (car, index) =>
       clearedCarsContainer.appendChild(
-        await createCarItem(car.name, car.color, car.id)
+        await createCarItem(car.name, car.color, page * 7 + index + 1)
       )
     )
   );

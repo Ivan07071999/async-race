@@ -1,3 +1,5 @@
+import { carsArray } from './data';
+
 const selectedCar = {
   modelContainer: 0,
   carModel: 4,
@@ -8,8 +10,10 @@ const selectedCar = {
 
 export default selectedCar;
 
-export function updateCar(): void {
+export async function updateCar(): Promise<void> {
   const currentCar = document.getElementById(`${selectedCar.id}`);
+  const carIndex = selectedCar.id - 1;
+  const cars = await carsArray;
   const selectColor: HTMLInputElement = document.querySelector('#inputID-4')!;
   const selectModel: HTMLInputElement = document.querySelector('#inputID-2')!;
 
@@ -25,4 +29,10 @@ export function updateCar(): void {
     svgElement.style.color = selectColor.value;
     carModel.textContent = selectModel.value;
   }
+
+  if (cars[carIndex]) {
+    cars[carIndex].color = selectColor.value;
+    cars[carIndex].name = selectModel.value;
+  }
+  console.log(await cars);
 }

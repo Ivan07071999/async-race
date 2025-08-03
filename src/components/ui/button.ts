@@ -6,6 +6,7 @@ import {
   garagePages,
 } from '../../features/garage/garageCreateCars';
 import clearCarsContainer from '../../utils/clear';
+import { disabledButtons, enabledNextButton } from '../../utils/disableButtons';
 // import clearCarsContainer from '../../utils/clear';
 
 type ButtonsType = {
@@ -60,6 +61,7 @@ export function createHeaderButtons(): ButtonsType {
       .then(() => createCarsPage(garagePages.PAGE_NUMBER))
       .then(() => {
         console.log('Все операции выполнены успешно');
+        enabledNextButton();
       })
       .catch(error => {
         console.error('Произошла ошибка:', error);
@@ -70,12 +72,14 @@ export function createHeaderButtons(): ButtonsType {
     clearCarsContainer();
     garagePages.PAGE_NUMBER += 1;
     createCarsPage(garagePages.PAGE_NUMBER);
+    disabledButtons(garagePages.PAGE_NUMBER);
   });
 
   prevButton.addEventListener('click', () => {
     clearCarsContainer();
     garagePages.PAGE_NUMBER -= 1;
     createCarsPage(garagePages.PAGE_NUMBER);
+    disabledButtons(garagePages.PAGE_NUMBER);
   });
 
   return {

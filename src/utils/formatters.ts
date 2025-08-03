@@ -1,5 +1,6 @@
 import type { ICar } from '../store/garage/garageThunks';
 import createCarItem from '../features/garage/garageItem';
+import { carsArray } from './data';
 
 async function createNewCar() {
   const colorCar: HTMLInputElement | null =
@@ -16,13 +17,20 @@ async function createNewCar() {
     const newCar: ICar = {
       name: carModel.value,
       color: colorCar.value,
-      id: carList.length + 1,
+      id: (await carsArray).length + 1,
     };
 
-    carsContainer?.appendChild(
-      await createCarItem(newCar.name, newCar.color, newCar.id)
-    );
+    (await carsArray).push(newCar);
+
+    if (carList.length < 7) {
+      carsContainer?.appendChild(
+        await createCarItem(newCar.name, newCar.color, (await carsArray).length)
+      );
+    }
   }
+  const carsLength = document.querySelector('h1') as HTMLElement;
+  carsLength.textContent = `Garage(${(await carsArray).length})`;
+  console.log(await carsArray);
 }
 
 export default createNewCar;

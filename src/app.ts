@@ -6,6 +6,10 @@ import { createLabelAndInput } from './components/ui/input';
 import getCars from './store/garage/garageThunks';
 import { type ICar } from './store/garage/garageThunks';
 import createGaragePage from './features/garage/garagePage';
+import {
+  disabledNextButton,
+  disabledPreviewButton,
+} from './utils/disableButtons';
 
 const container = document.querySelector('#app');
 const header = createHeader();
@@ -41,6 +45,8 @@ async function appendTo(): Promise<void> {
   form.footerForm.appendChild(buttons.prev);
   form.footerForm.appendChild(buttons.next);
   getCars<ICar[]>();
+  disabledNextButton();
+  disabledPreviewButton();
 }
 
 export default appendTo;

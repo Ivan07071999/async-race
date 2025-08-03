@@ -1,6 +1,7 @@
 import { createHeaderButtons } from '../../components/ui/button';
-import getCars from '../../store/garage/garageThunks';
+// import getCars from '../../store/garage/garageThunks';
 import selectedCar from '../../utils/validator';
+import { carsArray } from '../../utils/data';
 
 export async function loadSVG(url: RequestInfo | URL) {
   const response = await fetch(url);
@@ -49,12 +50,18 @@ export async function createCarItem(
 
   remove.addEventListener('click', async () => {
     car.remove();
-    const data: object[] = await getCars();
-    await data.splice(ID - 1, 1);
+    (await carsArray).splice(ID - 1, 1);
+    (await carsArray).forEach((item, newID) => {
+      item.id = newID + 1;
+    });
+    const carsLength = document.querySelector('h1') as HTMLElement;
+    carsLength.textContent = `Garage(${(await carsArray).length})`;
+    console.log(await carsArray);
   });
 
   select.addEventListener('click', async () => {
     selectedCar.id = ID;
+    console.log(ID);
   });
 
   const flag = document.createElement('img');

@@ -34,5 +34,6 @@ export async function updateCar(): Promise<void> {
     cars[carIndex].color = selectColor.value;
     cars[carIndex].name = selectModel.value;
   }
+  selectModel.value = '';
   console.log(await cars);
 }

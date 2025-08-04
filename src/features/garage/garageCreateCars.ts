@@ -1,6 +1,11 @@
 import { carsColors, carsModels, carsArray } from '../../utils/data';
 import createCarItem from './garageItem';
 import type { ICar } from '../../store/garage/garageThunks';
+import {
+  enabledNextButton,
+  disabledButtons,
+  enabledButtonPreview,
+} from '../../utils/disableButtons';
 // import clearCarsContainer from '../../utils/clear';
 
 export const garagePages = {
@@ -27,6 +32,14 @@ export async function createCarsPage(page: number) {
     )
   );
   console.log(carElements, 'car element');
+  if ((await carsArray).length > 7) {
+    enabledNextButton();
+  }
+
+  if (garagePages.PAGE_NUMBER > 0) {
+    enabledButtonPreview();
+  }
+  disabledButtons(garagePages.PAGE_NUMBER);
   return carElements;
 }
 

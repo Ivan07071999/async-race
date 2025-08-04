@@ -1,3 +1,6 @@
+// import { carsArray } from './data';
+// import { removeCar } from '../features/garage/garageItem';
+
 function clearCarsContainer(): void {
   const clearedCarsContainer =
     document.querySelector<HTMLDivElement>('.form-car')!;

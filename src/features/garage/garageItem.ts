@@ -2,6 +2,38 @@ import { createHeaderButtons } from '../../components/ui/button';
 // import getCars from '../../store/garage/garageThunks';
 import selectedCar from '../../utils/validator';
 import { carsArray } from '../../utils/data';
+import { createCarsPage, garagePages } from './garageCreateCars';
+import clearCarsContainer from '../../utils/clear';
+
+export async function removeCar(id: number) {
+  // const len = document.querySelector('.form-car') as HTMLAnchorElement;
+  // if (!len?.childNodes.length === 0) {
+  //   // clearCarsContainer();
+  //   garagePages.PAGE_NUMBER -= 1;
+  //   createCarsPage(garagePages.PAGE_NUMBER);
+  // }
+
+  (await carsArray).splice(id - 1, 1);
+  (await carsArray).forEach((item, newID) => {
+    item.id = newID + 1;
+  });
+  clearCarsContainer();
+  createCarsPage(garagePages.PAGE_NUMBER);
+
+  const allCars = document.querySelectorAll('.car-wrapper');
+  allCars.forEach((item, ind) => {
+    item.id = String(ind + 1);
+  });
+
+  if ((await carsArray).length % 7 === 0 && garagePages.PAGE_NUMBER !== 0) {
+    garagePages.PAGE_NUMBER -= 1;
+    createCarsPage(garagePages.PAGE_NUMBER);
+  }
+
+  const carsLength = document.querySelector('h1') as HTMLElement;
+  carsLength.textContent = `Garage(${(await carsArray).length})`;
+  console.log(await carsArray);
+}
 
 export async function loadSVG(url: RequestInfo | URL) {
   const response = await fetch(url);
@@ -49,14 +81,9 @@ export async function createCarItem(
   select.className = 'button-change';
 
   remove.addEventListener('click', async () => {
-    car.remove();
-    (await carsArray).splice(ID - 1, 1);
-    (await carsArray).forEach((item, newID) => {
-      item.id = newID + 1;
-    });
-    const carsLength = document.querySelector('h1') as HTMLElement;
-    carsLength.textContent = `Garage(${(await carsArray).length})`;
-    console.log(await carsArray);
+    // car.remove();
+    removeCar(ID);
+    // removeAllEventListener();
   });
 
   select.addEventListener('click', async () => {

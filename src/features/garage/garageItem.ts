@@ -4,6 +4,8 @@ import selectedCar from '../../utils/validator';
 import { carsArray } from '../../utils/data';
 import { createCarsPage, garagePages } from './garageCreateCars';
 import clearCarsContainer from '../../utils/clear';
+// import startCar from '../engine/enginePage';
+import { startAndAnimateCar, stopCarEngine } from '../engine/enginePage';
 
 export async function removeCar(id: number) {
   // const len = document.querySelector('.form-car') as HTMLAnchorElement;
@@ -75,8 +77,8 @@ export async function createCarItem(
   const A = createHeaderButtons().a;
   const B = createHeaderButtons().b;
 
-  A.className = 'button-control';
-  B.className = 'button-control';
+  A.className = 'button-control button-start';
+  B.className = 'button-control button-stop';
   remove.className = 'button-change';
   select.className = 'button-change';
 
@@ -90,6 +92,9 @@ export async function createCarItem(
     selectedCar.id = ID;
     console.log(ID);
   });
+
+  A.addEventListener('click', () => startAndAnimateCar(ID, svgElement));
+  B.addEventListener('click', () => stopCarEngine(ID, svgElement));
 
   const flag = document.createElement('img');
   flag.src = '/src/assets/flag.png';

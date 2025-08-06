@@ -7,6 +7,8 @@ import {
 } from '../../features/garage/garageCreateCars';
 import clearCarsContainer from '../../utils/clear';
 import { disabledButtons, enabledNextButton } from '../../utils/disableButtons';
+import startRace from '../../features/engine/engineControls';
+// import startCar from '../../features/engine/enginePage';
 // import clearCarsContainer from '../../utils/clear';
 
 type ButtonsType = {
@@ -81,6 +83,10 @@ export function createHeaderButtons(): ButtonsType {
     createCarsPage(garagePages.PAGE_NUMBER);
     disabledButtons(garagePages.PAGE_NUMBER);
   });
+
+  raceButton.addEventListener('click', () => startRace());
+
+  // A.addEventListener('click', startCar())
 
   return {
     winners: winnersButton,

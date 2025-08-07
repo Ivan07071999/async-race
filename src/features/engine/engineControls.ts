@@ -1,10 +1,16 @@
-function startRace() {
-  const startRaceButtons = document.querySelectorAll('.button-start');
-  console.log(startRaceButtons);
-  for (let i = 0; i < startRaceButtons.length; i += 1) {
-    // startRaceButtons[i].click();
-    (startRaceButtons[i] as HTMLElement).click();
-  }
+export function startRace(selector: string) {
+  const startRaceButtons = document.querySelectorAll(`.${selector}`);
+
+  const clickPromises = Array.from(startRaceButtons).map(button => {
+    return new Promise<void>(resolve => {
+      (button as HTMLElement).click();
+      resolve();
+    });
+  });
+
+  Promise.all(clickPromises).then(() => {
+    console.log('Все кнопки нажаты одновременно');
+  });
 }
 
 export default startRace;

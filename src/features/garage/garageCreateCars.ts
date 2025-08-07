@@ -54,6 +54,7 @@ function pushCarInArray(currentID: number): ICar {
 }
 
 export async function pushCarsInCarsArray<T>(): Promise<T | undefined> {
+  const addedCars: ICar[] = [];
   if (garagePages.count === 100) {
     garagePages.count = 0;
     return;
@@ -61,6 +62,38 @@ export async function pushCarsInCarsArray<T>(): Promise<T | undefined> {
 
   (await carsArray).push(pushCarInArray((await carsArray).length + 1));
   garagePages.count += 1;
+  // const newCar = pushCarInArray((await carsArray).length + 1);
+
+  // Отправляем на сервер
+  const serverCar = await addCarToServer(newCar);
+  addedCars.push(serverCar);
   // console.log(await carsArray);
   return pushCarsInCarsArray();
+}
+
+async function addCarToServer(car: ICar): Promise<ICar> {
+  const serverUrl = 'http://localhost:3000';
+  const url = new URL('/garage', serverUrl);
+
+  try {
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(car),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `Server responded with status ${response.status}: ${errorText}`
+      );
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to add car to server:', error);
+    throw error;
+  }
 }

@@ -84,9 +84,8 @@ export function createHeaderButtons(): ButtonsType {
     disabledButtons(garagePages.PAGE_NUMBER);
   });
 
-  raceButton.addEventListener('click', () => startRace());
-
-  // A.addEventListener('click', startCar())
+  raceButton.addEventListener('click', () => startRace('button-start'));
+  resetButton.addEventListener('click', () => startRace('button-stop'));
 
   return {
     winners: winnersButton,

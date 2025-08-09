@@ -1,40 +1,48 @@
 import { createHeaderButtons } from '../../components/ui/button';
 // import getCars from '../../store/garage/garageThunks';
 import selectedCar from '../../utils/validator';
-import { carsArray } from '../../utils/data';
-import { createCarsPage, garagePages } from './garageCreateCars';
-import clearCarsContainer from '../../utils/clear';
+// import { carsArray } from '../../utils/data';
+// import { createCarsPage, garagePages } from './garageCreateCars';
+// import clearCarsContainer from '../../utils/clear';
 // import startCar from '../engine/enginePage';
 import { startAndAnimateCar, stopCarEngine } from '../engine/enginePage';
+import { createCarsPage, garagePages } from './garageCreateCars';
+import clearCarsContainer from '../../utils/clear';
 
-export async function removeCar(id: number) {
-  // const len = document.querySelector('.form-car') as HTMLAnchorElement;
-  // if (!len?.childNodes.length === 0) {
-  //   // clearCarsContainer();
-  //   garagePages.PAGE_NUMBER -= 1;
-  //   createCarsPage(garagePages.PAGE_NUMBER);
-  // }
-
-  (await carsArray).splice(id - 1, 1);
-  (await carsArray).forEach((item, newID) => {
-    item.id = newID + 1;
-  });
-  clearCarsContainer();
-  createCarsPage(garagePages.PAGE_NUMBER);
-
-  const allCars = document.querySelectorAll('.car-wrapper');
-  allCars.forEach((item, ind) => {
-    item.id = String(ind + 1);
-  });
-
-  if ((await carsArray).length % 7 === 0 && garagePages.PAGE_NUMBER !== 0) {
-    garagePages.PAGE_NUMBER -= 1;
-    createCarsPage(garagePages.PAGE_NUMBER);
-  }
-
+export async function deleteServerCar(carId: number) {
   const carsLength = document.querySelector('h1') as HTMLElement;
-  carsLength.textContent = `Garage(${(await carsArray).length})`;
-  console.log(await carsArray);
+  carsLength.textContent = `Garage(${(garagePages.carsNumber -= 1)})`;
+  const carsContainer = document.querySelector('.form-car')!;
+  const containerChilde: number = carsContainer?.childNodes.length;
+  try {
+    const serverUrl = 'http://localhost:3000';
+    const url = new URL(`/garage/${carId}`, serverUrl);
+
+    const response = await fetch(url, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Ошибка HTTP: ${response.status}`);
+    }
+
+    if (response.status === 204) {
+      console.log(`Объект с ID=${carId} успешно удален (статус 204)`);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('Объект успешно удален:', data);
+
+    if (containerChilde < 7) {
+      clearCarsContainer();
+      createCarsPage(garagePages.PAGE_NUMBER);
+    }
+    return data;
+  } catch (error) {
+    console.error('Ошибка при удалении:', error);
+    throw error; // Пробрасываем ошибку дальше для обработки
+  }
 }
 
 export async function loadSVG(url: RequestInfo | URL) {
@@ -83,9 +91,8 @@ export async function createCarItem(
   select.className = 'button-change';
 
   remove.addEventListener('click', async () => {
-    // car.remove();
-    removeCar(ID);
-    // removeAllEventListener();
+    car.remove();
+    deleteServerCar(ID);
   });
 
   select.addEventListener('click', async () => {

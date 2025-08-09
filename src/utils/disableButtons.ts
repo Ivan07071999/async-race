@@ -1,5 +1,5 @@
-import { carsArray } from './data';
 import { garagePages } from '../features/garage/garageCreateCars';
+import getCars, { type ICar } from '../store/garage/garageThunks';
 
 export function disabledPreviewButton() {
   const buttonPreview = document.querySelector(
@@ -46,13 +46,15 @@ export function enabledNextButton() {
 }
 
 export async function disabledButtons(page: number) {
-  let lastPage: number = Math.floor(((await carsArray).length ?? 0) / 7);
+  let lastPage: number = Math.floor(
+    ((await getCars<ICar[]>()).length ?? 0) / 7
+  );
   // const newLastPage = lastPage % 7 !== 0 ? (lastPage -= 1) : lastPage;
-  if ((await carsArray).length % 7 === 0) {
+  if ((await getCars<ICar[]>()).length % 7 === 0) {
     lastPage -= 1;
   }
   console.log(garagePages.PAGE_NUMBER, lastPage);
-  console.log(await carsArray);
+  // console.log(await carsArray);
 
   switch (page) {
     case 0:

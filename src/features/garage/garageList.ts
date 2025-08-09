@@ -6,7 +6,7 @@ async function createCarsList() {
   const data = await getCars<ICar[]>();
   console.log(data, 'data');
   const carElements = await Promise.all(
-    data.map((item, index) => createCarItem(item.name, item.color, index + 1))
+    data.map(item => createCarItem(item.name, item.color, item.id))
   );
   console.log(carElements, 'car element');
   return carElements;

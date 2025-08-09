@@ -1,47 +1,53 @@
-import type { ICar } from '../store/garage/garageThunks';
-// import createCarItem from '../features/garage/garageItem';
-import { carsArray } from './data';
-// import { disabledNextButton } from './disableButtons';
-import {
-  createCarsPage,
-  garagePages,
-} from '../features/garage/garageCreateCars';
-import clearCarsContainer from './clear';
+import createCarItem from '../features/garage/garageItem';
+import { garagePages } from '../features/garage/garageCreateCars';
 
-async function createNewCar() {
+export function createCarObject(
+  carModel: string,
+  carColor: string,
+  carID?: number
+) {
+  return {
+    name: carModel,
+    color: carColor,
+    id: carID,
+  };
+}
+
+export async function createNewCar() {
   const colorCar: HTMLInputElement | null =
     document.querySelector('#inputID-3');
   const carModel: HTMLInputElement | null =
     document.querySelector('#inputID-1');
-  // const carList = document.querySelectorAll('.car-wrapper');
-  // const carsContainer = document.querySelector('.form-car');
+  const carList = document.querySelectorAll('.car-wrapper');
+  const carsContainer = document.querySelector('.form-car');
+  const lastChild = carsContainer?.children[carsContainer.children.length - 1];
+  const carsLength = document.querySelector('h1') as HTMLElement;
+  carsLength.textContent = `Garage(${(garagePages.carsNumber += 1)})`;
+
+  let newIdNumber;
+
+  if (lastChild && lastChild.id) {
+    newIdNumber = Number(lastChild.id) + 1;
+  } else {
+    newIdNumber = 1;
+  }
 
   if (
     colorCar instanceof HTMLInputElement &&
     carModel instanceof HTMLInputElement
   ) {
-    const newCar: ICar = {
-      name: carModel.value,
-      color: colorCar.value,
-      id: (await carsArray).length + 1,
-    };
+    const newCar = createCarObject(carModel.value, colorCar.value);
 
-    clearCarsContainer();
-
-    (await carsArray).push(newCar);
-    createCarsPage(garagePages.PAGE_NUMBER);
-
-    // if (carList.length < 7) {
-    //   carsContainer?.appendChild(
-    //     await createCarItem(newCar.name, newCar.color, (await carsArray).length)
-    //   );
-    // }
+    if (carList.length < 7) {
+      carsContainer?.appendChild(
+        await createCarItem(newCar.name, newCar.color, newIdNumber)
+      );
+    }
     carModel.value = '';
+    return newCar;
   }
 
-  const carsLength = document.querySelector('h1') as HTMLElement;
-  carsLength.textContent = `Garage(${(await carsArray).length})`;
-  console.log(await carsArray);
+  // console.log(await carsArray);
 }
 
 export default createNewCar;

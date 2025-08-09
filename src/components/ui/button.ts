@@ -1,13 +1,17 @@
-import createNewCar from '../../utils/formatters';
+// import createNewCar from '../../utils/formatters';
 import { updateCar } from '../../utils/validator';
 import {
-  pushCarsInCarsArray,
+  generate100Cars,
   createCarsPage,
   garagePages,
+  addCarToServer,
 } from '../../features/garage/garageCreateCars';
 import clearCarsContainer from '../../utils/clear';
 import { disabledButtons, enabledNextButton } from '../../utils/disableButtons';
 import startRace from '../../features/engine/engineControls';
+import createNewCar from '../../utils/formatters';
+import { type ICar } from '../../store/garage/garageThunks';
+import getCars from '../../store/garage/garageThunks';
 // import startCar from '../../features/engine/enginePage';
 // import clearCarsContainer from '../../utils/clear';
 
@@ -55,10 +59,14 @@ export function createHeaderButtons(): ButtonsType {
   const A = createButton('A', 'button-car-logic');
   const B = createButton('B', 'button-car-logic');
 
-  createCarButton.addEventListener('click', () => createNewCar());
+  createCarButton.addEventListener('click', () =>
+    addCarToServer(createNewCar()).then(async () => {
+      if ((await getCars<ICar[]>()).length > 7) enabledNextButton();
+    })
+  );
   updateCarButton.addEventListener('click', () => updateCar());
   generateCarsButton.addEventListener('click', () => {
-    pushCarsInCarsArray()
+    generate100Cars()
       .then(() => clearCarsContainer())
       .then(() => createCarsPage(garagePages.PAGE_NUMBER))
       .then(() => {

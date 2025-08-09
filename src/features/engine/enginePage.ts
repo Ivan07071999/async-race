@@ -1,3 +1,6 @@
+import updateWinnersOnServer from '../../store/winners/winnersThunks';
+import controlTimer, { TIMER } from '../../utils/timer';
+
 const animationStates: Record<
   number,
   {
@@ -87,6 +90,9 @@ function initAnimationState(id: number) {
 // Получение параметров движения
 async function getMovementParams(id: number) {
   const engineResponse = await startEngine(id);
+  TIMER.status = true;
+  controlTimer();
+
   console.log(
     `Engine started for car ${id}: velocity=${engineResponse.velocity}, distance=${engineResponse.distance}`
   );
@@ -213,6 +219,12 @@ function handleCarBreakdown(svgElement: HTMLElement, position: number) {
 async function handleDriveRequest(id: number, svgElement: HTMLElement) {
   try {
     await startDrive(id);
+    if (TIMER.status !== false) {
+      updateWinnersOnServer(id);
+    }
+    TIMER.status = false;
+
+    controlTimer();
     console.log(`Drive completed successfully for car ${id}`);
   } catch (error) {
     if (error instanceof Error && error.message.includes('500')) {

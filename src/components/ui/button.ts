@@ -1,4 +1,3 @@
-// import createNewCar from '../../utils/formatters';
 import { updateCar } from '../../utils/validator';
 import {
   generate100Cars,
@@ -12,8 +11,7 @@ import startRace from '../../features/engine/engineControls';
 import createNewCar from '../../utils/formatters';
 import { type ICar } from '../../store/garage/garageThunks';
 import getCars from '../../store/garage/garageThunks';
-// import startCar from '../../features/engine/enginePage';
-// import clearCarsContainer from '../../utils/clear';
+import openWinnersPage from '../../features/winners/winnersPage';
 
 type ButtonsType = {
   winners: HTMLButtonElement;
@@ -59,9 +57,14 @@ export function createHeaderButtons(): ButtonsType {
   const A = createButton('A', 'button-car-logic');
   const B = createButton('B', 'button-car-logic');
 
+  garageButton.addEventListener('click', () => openWinnersPage());
+
   createCarButton.addEventListener('click', () =>
-    addCarToServer(createNewCar()).then(async () => {
-      if ((await getCars<ICar[]>()).length > 7) enabledNextButton();
+    createNewCar().then(async newCar => {
+      if (newCar) {
+        await addCarToServer(newCar);
+        if ((await getCars<ICar[]>()).length > 7) enabledNextButton();
+      }
     })
   );
   updateCarButton.addEventListener('click', () => updateCar());

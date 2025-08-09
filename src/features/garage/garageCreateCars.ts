@@ -27,9 +27,9 @@ export async function createCarsPage(page: number) {
   console.log(currentPAge);
 
   const carElements = await Promise.all(
-    currentPAge.map(async (car, index) =>
+    currentPAge.map(async car =>
       clearedCarsContainer.appendChild(
-        await createCarItem(car.name, car.color, page * 7 + index + 1)
+        await createCarItem(car.name, car.color, car.id)
       )
     )
   );

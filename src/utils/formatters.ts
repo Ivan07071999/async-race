@@ -13,7 +13,13 @@ export function createCarObject(
   };
 }
 
-export async function createNewCar() {
+export async function createNewCar(): Promise<
+  | {
+      name: string;
+      color: string;
+    }
+  | undefined
+> {
   const colorCar: HTMLInputElement | null =
     document.querySelector('#inputID-3');
   const carModel: HTMLInputElement | null =
@@ -46,7 +52,7 @@ export async function createNewCar() {
     carModel.value = '';
     return newCar;
   }
-
+  return undefined;
   // console.log(await carsArray);
 }
 

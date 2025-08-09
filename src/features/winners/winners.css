@@ -1,0 +1,32 @@
+.form-winners {
+  width: max-content;
+  color: aliceblue;
+  text-align: center;
+}
+
+.row-winner {
+  width: max-content;
+  display: flex;
+  margin: auto;
+}
+
+.winners-info {
+  width:  max-content;
+}
+
+.winner-number {
+  width: 60px;
+}
+
+.winner-wins,
+.winner-car {
+  width: 50px;
+}
+
+.winner-name {
+  width: 70px;
+}
+
+.winner-time {
+  width: 100px;
+}

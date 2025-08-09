@@ -1,19 +1,17 @@
 import { createHeaderButtons } from '../../components/ui/button';
-// import getCars from '../../store/garage/garageThunks';
+import getCars from '../../store/garage/garageThunks';
 import selectedCar from '../../utils/validator';
-// import { carsArray } from '../../utils/data';
-// import { createCarsPage, garagePages } from './garageCreateCars';
-// import clearCarsContainer from '../../utils/clear';
-// import startCar from '../engine/enginePage';
 import { startAndAnimateCar, stopCarEngine } from '../engine/enginePage';
 import { createCarsPage, garagePages } from './garageCreateCars';
 import clearCarsContainer from '../../utils/clear';
+import { type ICar } from '../../store/garage/garageThunks';
 
 export async function deleteServerCar(carId: number) {
   const carsLength = document.querySelector('h1') as HTMLElement;
   carsLength.textContent = `Garage(${(garagePages.carsNumber -= 1)})`;
   const carsContainer = document.querySelector('.form-car')!;
   const containerChilde: number = carsContainer?.childNodes.length;
+  const cars = (await getCars<ICar[]>()).length;
   try {
     const serverUrl = 'http://localhost:3000';
     const url = new URL(`/garage/${carId}`, serverUrl);
@@ -34,7 +32,7 @@ export async function deleteServerCar(carId: number) {
     const data = await response.json();
     console.log('Объект успешно удален:', data);
 
-    if (containerChilde < 7) {
+    if (containerChilde < 7 && cars > 7) {
       clearCarsContainer();
       createCarsPage(garagePages.PAGE_NUMBER);
     }

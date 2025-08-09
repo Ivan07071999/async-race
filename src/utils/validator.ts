@@ -63,10 +63,6 @@ export async function updateCar(): Promise<void> {
     color: selectColor.value,
   });
 
-  // if (cars[carIndex]) {
-  //   cars[carIndex].color = selectColor.value;
-  //   cars[carIndex].name = selectModel.value;
-  // }
   selectModel.value = '';
   console.log(await cars);
 }

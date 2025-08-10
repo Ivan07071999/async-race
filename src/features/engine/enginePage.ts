@@ -1,5 +1,12 @@
 import updateWinnersOnServer from '../../store/winners/winnersThunks';
+import {
+  disabledButtons,
+  enableCarButtons,
+  enableHeaderForms,
+  enableWinnersButton,
+} from '../../utils/disableButtons';
 import controlTimer, { TIMER } from '../../utils/timer';
+import { garagePages } from '../garage/garageCreateCars';
 
 const animationStates: Record<
   number,
@@ -225,6 +232,10 @@ async function handleDriveRequest(id: number, svgElement: HTMLElement) {
     TIMER.status = false;
 
     controlTimer();
+    disabledButtons(garagePages.PAGE_NUMBER);
+    enableWinnersButton();
+    enableHeaderForms();
+    enableCarButtons();
     console.log(`Drive completed successfully for car ${id}`);
   } catch (error) {
     if (error instanceof Error && error.message.includes('500')) {
@@ -268,7 +279,6 @@ export async function startAndAnimateCar(id: number, svgElement: HTMLElement) {
   }
 }
 
-// Функция для кнопки B (остановка двигателя)
 // Функция для кнопки B (остановка двигателя)
 export async function stopCarEngine(id: number, svgElement: HTMLElement) {
   try {

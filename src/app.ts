@@ -9,6 +9,8 @@ import createGaragePage from './features/garage/garagePage';
 import {
   disabledNextButton,
   disabledPreviewButton,
+  disableGarageButton,
+  disableWinnersButton,
 } from './utils/disableButtons';
 
 const container = document.querySelector('#app');
@@ -47,6 +49,8 @@ async function appendTo(): Promise<void> {
   getCars<ICar[]>();
   disabledNextButton();
   disabledPreviewButton();
+  disableWinnersButton();
+  disableGarageButton();
 }
 
 export default appendTo;

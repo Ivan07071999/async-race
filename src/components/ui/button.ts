@@ -5,8 +5,20 @@ import {
   garagePages,
   addCarToServer,
 } from '../../features/garage/garageCreateCars';
-import clearCarsContainer from '../../utils/clear';
-import { disabledButtons, enabledNextButton } from '../../utils/disableButtons';
+import clearCarsContainer, { clearHeads } from '../../utils/clear';
+import {
+  disableCarButtons,
+  disabledButtons,
+  disabledNextButton,
+  disabledPreviewButton,
+  disableGarageButton,
+  disableHeaderForms,
+  disableWinnersButton,
+  enabledNextButton,
+  enableGarageButton,
+  enableHeaderForms,
+  enableWinnersButton,
+} from '../../utils/disableButtons';
 import startRace from '../../features/engine/engineControls';
 import createNewCar from '../../utils/formatters';
 import { type ICar } from '../../store/garage/garageThunks';
@@ -57,7 +69,22 @@ export function createHeaderButtons(): ButtonsType {
   const A = createButton('A', 'button-car-logic');
   const B = createButton('B', 'button-car-logic');
 
-  garageButton.addEventListener('click', () => openWinnersPage());
+  garageButton.addEventListener('click', () => {
+    openWinnersPage();
+    disableHeaderForms();
+    disableWinnersButton();
+    enableGarageButton();
+    clearHeads();
+  });
+
+  winnersButton.addEventListener('click', () => {
+    clearCarsContainer();
+    createCarsPage(garagePages.PAGE_NUMBER);
+    enableHeaderForms();
+    disableGarageButton();
+    enableWinnersButton();
+    clearHeads();
+  });
 
   createCarButton.addEventListener('click', () =>
     createNewCar().then(async newCar => {
@@ -95,7 +122,14 @@ export function createHeaderButtons(): ButtonsType {
     disabledButtons(garagePages.PAGE_NUMBER);
   });
 
-  raceButton.addEventListener('click', () => startRace('button-start'));
+  raceButton.addEventListener('click', () => {
+    startRace('button-start');
+    disableWinnersButton();
+    disabledNextButton();
+    disabledPreviewButton();
+    disableHeaderForms();
+    disableCarButtons();
+  });
   resetButton.addEventListener('click', () => startRace('button-stop'));
 
   return {

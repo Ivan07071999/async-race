@@ -1,7 +1,7 @@
 import { createRowElements } from './winnerRow';
 import './winners.css';
 
-function createWinnersForm(): HTMLDivElement {
+async function createWinnersForm(): Promise<HTMLDivElement> {
   const formCars = document.querySelector('.form-car');
   const winnersInfo = document.createElement('div');
   winnersInfo.className = 'winners-info';
@@ -9,7 +9,7 @@ function createWinnersForm(): HTMLDivElement {
   winnersForm.className = 'form-winners';
   formCars?.appendChild(winnersForm);
   winnersForm.appendChild(
-    createRowElements('Number', 'Car', 'Name', 'Wins', 'Best time(sec.)')
+    await createRowElements('Number', 'Car', 'Name', 'Wins', 'Best time(sec.)')
   );
   winnersForm.appendChild(winnersInfo);
 

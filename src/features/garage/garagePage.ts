@@ -20,7 +20,7 @@ export async function uploadGarage(cars: ICar[]) {
 
   try {
     const response = await fetch(url.toString(), {
-      method: 'POST', // или 'PUT', если нужно заменить
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },

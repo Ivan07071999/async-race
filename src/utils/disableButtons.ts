@@ -69,3 +69,96 @@ export async function disabledButtons(page: number) {
       break;
   }
 }
+
+export function disableHeaderForms() {
+  const createForm = document.querySelector(
+    '.header-form-middle'
+  ) as HTMLButtonElement;
+  const raceForm = document.querySelector(
+    '.header-form-bottom'
+  ) as HTMLButtonElement;
+
+  createForm.style.pointerEvents = 'none';
+  createForm.style.opacity = '0.5';
+
+  raceForm.style.pointerEvents = 'none';
+  raceForm.style.opacity = '0.5';
+  disabledNextButton();
+  disabledPreviewButton();
+}
+
+export function enableHeaderForms() {
+  const createForm = document.querySelector(
+    '.header-form-middle'
+  ) as HTMLButtonElement;
+  const raceForm = document.querySelector(
+    '.header-form-bottom'
+  ) as HTMLButtonElement;
+
+  createForm.style.pointerEvents = 'auto';
+  createForm.style.opacity = '1.0';
+
+  raceForm.style.pointerEvents = 'auto';
+  raceForm.style.opacity = '1.0';
+  disabledButtons(garagePages.PAGE_NUMBER);
+}
+
+export function disableWinnersButton() {
+  const winnersButton = document.querySelector(
+    '.winners-button'
+  ) as HTMLButtonElement;
+
+  winnersButton.disabled = true;
+  winnersButton.style.opacity = '0.5';
+  winnersButton.style.pointerEvents = 'none';
+}
+
+export function enableWinnersButton() {
+  const winnersButton = document.querySelector(
+    '.winners-button'
+  ) as HTMLButtonElement;
+
+  winnersButton.disabled = false;
+  winnersButton.style.opacity = '1.0';
+  winnersButton.style.pointerEvents = 'auto';
+}
+
+export function disableGarageButton() {
+  const garageButton = document.querySelector(
+    '.garage-button'
+  ) as HTMLButtonElement;
+
+  garageButton.disabled = true;
+  garageButton.style.opacity = '0.5';
+  garageButton.style.pointerEvents = 'none';
+}
+
+export function enableGarageButton() {
+  const garageButton = document.querySelector(
+    '.garage-button'
+  ) as HTMLButtonElement;
+
+  garageButton.disabled = false;
+  garageButton.style.opacity = '1.0';
+  garageButton.style.pointerEvents = 'auto';
+}
+
+export function disableCarButtons(): void {
+  const carContainers =
+    document.querySelectorAll<HTMLDivElement>('.button-container');
+
+  carContainers.forEach((container: HTMLDivElement): void => {
+    container.style.pointerEvents = 'none';
+    container.style.opacity = '0.5';
+  });
+}
+
+export function enableCarButtons(): void {
+  const carContainers =
+    document.querySelectorAll<HTMLDivElement>('.button-container');
+
+  carContainers.forEach((container: HTMLDivElement): void => {
+    container.style.pointerEvents = 'auto';
+    container.style.opacity = '1.0';
+  });
+}

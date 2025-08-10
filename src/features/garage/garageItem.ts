@@ -52,7 +52,7 @@ export async function loadSVG(url: RequestInfo | URL) {
   return svgElement;
 }
 
-function cleanSVG(svgElement: HTMLElement) {
+export function cleanSVG(svgElement: HTMLElement) {
   const elementsWithStyle = svgElement.querySelectorAll('[style]');
   elementsWithStyle.forEach(el => el.removeAttribute('style'));
   svgElement.setAttribute('fill', 'currentColor');

@@ -1,10 +1,12 @@
+import { getSVG } from '../../store/winners/winnerSlice';
+
 export function createWinnerRow(): HTMLDivElement {
   const winnerRow: HTMLDivElement = document.createElement('div');
   winnerRow.className = 'row-winner';
   return winnerRow;
 }
 
-export function createRowElements(
+export async function createRowElements(
   numberText: string,
   carText: string,
   nameText: string,
@@ -12,6 +14,7 @@ export function createRowElements(
   bestTimeText: string
 ) {
   const winnerRow = createWinnerRow();
+  const svgElement = await getSVG();
 
   const number: HTMLDivElement = document.createElement('div');
   number.className = 'winner-number';
@@ -21,6 +24,9 @@ export function createRowElements(
   car.className = 'winner-car';
   car.textContent = carText;
 
+  if (car.textContent === '') {
+    car.appendChild(svgElement);
+  }
   const name: HTMLDivElement = document.createElement('div');
   name.className = 'winner-name';
   name.textContent = nameText;

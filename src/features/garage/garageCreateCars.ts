@@ -101,3 +101,9 @@ export async function generate100Cars<T>(): Promise<T | undefined> {
 
   return generate100Cars();
 }
+
+export function handlePageLoad(): void {
+  console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+  createCarsPage(garagePages.PAGE_NUMBER);
+  console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+}

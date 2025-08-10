@@ -19,6 +19,7 @@ async function updateWinnersOnServer(id: number): Promise<void> {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          id,
           wins: existingWinner.wins + 1,
           time: newWinnerTime,
         }),

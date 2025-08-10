@@ -53,7 +53,6 @@ export async function createNewCar(): Promise<
     return newCar;
   }
   return undefined;
-  // console.log(await carsArray);
 }
 
 export default createNewCar;

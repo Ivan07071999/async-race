@@ -2,6 +2,7 @@
   width: max-content;
   color: aliceblue;
   text-align: center;
+  margin: auto;
 }
 
 .row-winner {
@@ -16,17 +17,21 @@
 
 .winner-number {
   width: 60px;
+  line-height: 30px;
 }
 
 .winner-wins,
 .winner-car {
   width: 50px;
+  line-height: 30px;
 }
 
 .winner-name {
   width: 70px;
+  line-height: 30px;
 }
 
 .winner-time {
   width: 100px;
+  line-height: 30px;
 }

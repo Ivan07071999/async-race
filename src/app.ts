@@ -51,6 +51,7 @@ async function appendTo(): Promise<void> {
   disabledPreviewButton();
   disableWinnersButton();
   disableGarageButton();
+  // timeSort?.addEventListener('click', () => console.log('fsd'))
 }
 
 export default appendTo;

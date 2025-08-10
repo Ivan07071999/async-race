@@ -24,6 +24,7 @@ import createNewCar from '../../utils/formatters';
 import { type ICar } from '../../store/garage/garageThunks';
 import getCars from '../../store/garage/garageThunks';
 import openWinnersPage from '../../features/winners/winnersPage';
+import { sortWinnersForTime } from '../../store/winners/winnerSlice';
 
 type ButtonsType = {
   winners: HTMLButtonElement;
@@ -75,6 +76,7 @@ export function createHeaderButtons(): ButtonsType {
     disableWinnersButton();
     enableGarageButton();
     clearHeads();
+    sortWinnersForTime();
   });
 
   winnersButton.addEventListener('click', () => {

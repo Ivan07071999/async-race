@@ -24,3 +24,13 @@ export function clearHeads() {
     }
   }
 }
+
+export function clearWinnerTable() {
+  const winnersTable = document.querySelector('.winners-info');
+
+  if (winnersTable) {
+    while (winnersTable.firstChild) {
+      winnersTable.removeChild(winnersTable.firstChild);
+    }
+  }
+}

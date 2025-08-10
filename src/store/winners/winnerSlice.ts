@@ -1,6 +1,8 @@
 import { createRowElements } from '../../features/winners/winnerRow';
 import { loadSVG, cleanSVG } from '../../features/garage/garageItem';
 
+let sortingUpDirection: boolean = true;
+
 type winCar = {
   name: string;
   color: string;
@@ -134,4 +136,37 @@ export async function appendWinners() {
 
     winnersContainer.appendChild(rowElement);
   });
+}
+
+export async function sortWinnersForTime() {
+  const winners = await formWinnersObject();
+  console.log(winners, 'win');
+  let sortedUp;
+
+  if (sortingUpDirection === true) {
+    sortedUp = winners.sort((a, b) => a.data.time - b.data.time);
+    sortingUpDirection = false;
+  } else {
+    sortedUp = winners.sort((a, b) => b.data.time - a.data.time);
+    sortingUpDirection = true;
+  }
+
+  return sortedUp;
+}
+
+export async function sortWinnersForWins() {
+  const winners = await formWinnersObject();
+  console.log(winners, 'win');
+  let sortedUp;
+
+  if (sortingUpDirection === true) {
+    sortedUp = winners.sort((a, b) => a.data.wins - b.data.wins);
+    sortingUpDirection = false;
+  } else {
+    sortedUp = winners.sort((a, b) => b.data.wins - a.data.wins);
+    sortingUpDirection = true;
+  }
+  console.log(sortedUp, 'up');
+
+  return sortedUp;
 }

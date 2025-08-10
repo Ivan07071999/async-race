@@ -47,4 +47,27 @@ async function updateWinnersOnServer(id: number): Promise<void> {
   }
 }
 
+export async function deleteWinnerFromServer(id: number): Promise<void> {
+  try {
+    const response = await fetch(`http://localhost:3000/winners/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.status === 404) {
+      throw new Error(`Winner with id ${id} not found`);
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete winner. Status: ${response.status}`);
+    }
+
+    if (response.status !== 204 && response.status !== 200) {
+      throw new Error(`Unexpected response status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error(`Error deleting winner with id ${id}:`, error);
+    throw error;
+  }
+}
+
 export default updateWinnersOnServer;

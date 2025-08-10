@@ -5,6 +5,7 @@ import { startAndAnimateCar, stopCarEngine } from '../engine/enginePage';
 import { createCarsPage, garagePages } from './garageCreateCars';
 import clearCarsContainer from '../../utils/clear';
 import { type ICar } from '../../store/garage/garageThunks';
+import { deleteWinnerFromServer } from '../../store/winners/winnersThunks';
 
 export async function deleteServerCar(carId: number) {
   const carsLength = document.querySelector('h1') as HTMLElement;
@@ -91,6 +92,7 @@ export async function createCarItem(
   remove.addEventListener('click', async () => {
     car.remove();
     deleteServerCar(ID);
+    deleteWinnerFromServer(ID);
   });
 
   select.addEventListener('click', async () => {

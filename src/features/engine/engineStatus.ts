@@ -20,21 +20,13 @@ export function handleStartError(
   svgElement: HTMLElement,
   error: unknown
 ) {
-  console.error(`Error starting car ${id}:`, error);
   const currentPosition = getCurrentPosition(svgElement);
   stopCarAnimation(svgElement, currentPosition);
 
-  if (error instanceof Error) {
-    if (error.message.includes('429')) {
-      console.log('Car is already in drive mode');
-    } else if (error.message.includes('404')) {
-      console.log('Engine not started or car not found');
-    }
-  }
   resetAnimationState(id);
+  throw new Error(`Error starting car ${id}:${error}`);
 }
 
-// Обработка запроса на движение
 export async function handleDriveRequest(id: number, svgElement: HTMLElement) {
   try {
     await startDrive(id);
@@ -48,10 +40,8 @@ export async function handleDriveRequest(id: number, svgElement: HTMLElement) {
     enableWinnersButton();
     enableHeaderForms();
     enableCarButtons();
-    console.log(`Drive completed successfully for car ${id}`);
   } catch (error) {
     if (error instanceof Error && error.message.includes('500')) {
-      console.log(`Car ${id} broke down during the race`);
       const currentPosition = getCurrentPosition(svgElement);
       handleCarBreakdown(svgElement, currentPosition);
       resetAnimationState(id);

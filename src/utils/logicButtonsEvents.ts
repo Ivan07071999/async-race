@@ -83,6 +83,7 @@ export function winnersButtonEvent(): void {
   enableHeaderForms();
   disableGarageButton();
   enableWinnersButton();
+  enableRaseButton();
   clearHeads();
 }
 

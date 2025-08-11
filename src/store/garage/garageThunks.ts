@@ -15,11 +15,9 @@ async function getCars<T>(): Promise<T> {
     }
 
     const data: T = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
-    console.error('Error:', error);
-    throw error;
+    throw new Error(`Error:${error}`);
   }
 }
 

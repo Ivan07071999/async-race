@@ -1,5 +1,6 @@
 import { loadSVG, cleanSVG } from '../../features/garage/garageItem';
 import type { winCar } from '../../types/winners';
+import { dragRaceCar } from '../../utils/data';
 
 export async function getWinnersFromServer(): Promise<
   Array<{ id: number; wins: number; time: number }>
@@ -17,8 +18,7 @@ export async function getWinnersFromServer(): Promise<
       time: number;
     }>;
   } catch (error) {
-    console.error('Error fetching winners:', error);
-    throw error;
+    throw new Error(`Error fetching winners:${error}`);
   }
 }
 
@@ -67,8 +67,7 @@ async function getCarFromGarage(
       color: car.color,
     };
   } catch (error) {
-    console.error(`Error fetching car with id ${id}:`, error);
-    throw error;
+    throw new Error(`Error fetching car with id ${id}:${error}`);
   }
 }
 
@@ -95,7 +94,7 @@ export async function formWinnersObject(): Promise<winCar[]> {
 }
 
 export async function getSVG() {
-  const svgElement = await loadSVG('/src/assets/drag-race-car.svg');
+  const svgElement = await loadSVG(dragRaceCar);
   cleanSVG(svgElement);
   return svgElement;
 }

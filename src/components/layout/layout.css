@@ -7,3 +7,11 @@
   justify-content: space-around;
   box-sizing: border-box;
 }
+
+@media (max-width: 820px) {
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

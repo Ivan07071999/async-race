@@ -25,8 +25,7 @@ async function sendEngineRequest(id: number, status: string, speed?: number) {
 
     return await response.json();
   } catch (error) {
-    console.error('Engine request failed:', error);
-    throw error;
+    throw new Error(`Engine request failed:${error}`);
   }
 }
 

@@ -27,7 +27,6 @@ export async function createCarsPage(page: number) {
     page * PAGE_LENGTH,
     page * PAGE_LENGTH + PAGE_LENGTH
   );
-  console.log(currentPAge);
 
   const carElements = await Promise.all(
     currentPAge.map(async car =>

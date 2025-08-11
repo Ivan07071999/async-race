@@ -15,6 +15,7 @@ async function createGaragePage() {
   garage.appendChild(head);
   garage.appendChild(subHead);
   garage.appendChild(await createCarForm());
+
   return garage;
 }
 
@@ -31,12 +32,10 @@ export async function uploadGarage(cars: ICar[]) {
       body: JSON.stringify(cars),
     });
     if (!response.ok) {
-      throw new Error(`Ошибка при отправке: ${response.statusText}`);
+      throw new Error(`Error sending data: ${response.statusText}`);
     }
-    const data = await response.json();
-    console.log('Данные успешно отправлены:', data);
   } catch (error) {
-    console.error('Ошибка при отправке данных:', error);
+    throw new Error(`Error sending data:${error}`);
   }
 }
 

@@ -1,6 +1,5 @@
 .garage {
   width: 100%;
-  border: 1px solid white;
   box-sizing: border-box;
 }
 
@@ -17,22 +16,21 @@ span {
 }
 
 .form-car {
-  border: 1px solid white;
   box-sizing: border-box;
-  height: 480px;
+  height: 580px;
 }
 
 .car-wrapper {
-  border: 1px solid white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 10px 0px 10px;
+  padding: 0px 30px 0px 20px;
+  margin-top: 15px;
 }
 
 .road {
   box-sizing: border-box;
-  width: 85%;
+  width: 90%;
   height: 35px;
   display: flex;
   justify-content: space-between;
@@ -64,4 +62,10 @@ span {
   width: 60px;
   height: 25px;
   margin: 2px;
+}
+
+@media (max-width: 1120px) {
+  .form-car {
+    height: max-content;
+  }
 }

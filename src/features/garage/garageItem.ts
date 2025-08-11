@@ -4,6 +4,7 @@ import { startAndAnimateCar } from '../engine/enginePage';
 import { stopCarEngine } from '../engine/engineControls';
 import { deleteWinnerFromServer } from '../../store/winners/winnersThunks';
 import { deleteServerCar } from '../../store/garage/garageSlice';
+import { dragRaceCar, flagIMG } from '../../utils/data';
 
 export async function loadSVG(url: RequestInfo | URL) {
   const response = await fetch(url);
@@ -34,7 +35,7 @@ export async function createCarItem(
   buttonsContainer.className = 'button-container';
   const carHead = document.createElement('span');
 
-  const svgElement = await loadSVG('/src/assets/drag-race-car.svg');
+  const svgElement = await loadSVG(dragRaceCar);
   cleanSVG(svgElement);
   svgElement.setAttribute('width', '45');
   svgElement.setAttribute('height', '45');
@@ -64,7 +65,7 @@ export async function createCarItem(
   B.addEventListener('click', () => stopCarEngine(ID, svgElement));
 
   const flag = document.createElement('img');
-  flag.src = '/src/assets/flag.png';
+  flag.src = flagIMG;
   flag.className = 'flag';
 
   carHead.textContent = name;

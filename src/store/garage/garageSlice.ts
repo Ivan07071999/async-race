@@ -6,6 +6,7 @@ import { clearCarsContainer } from '../../utils/clear';
 import { type ICar } from './garageThunks';
 import getCars from './garageThunks';
 import { updateHeadElementForRemove } from '../../utils/headElements';
+import { PAGE_LENGTH } from '../../utils/data';
 
 async function addCarToServer(carObject: {
   name: string;
@@ -15,7 +16,6 @@ async function addCarToServer(carObject: {
   const url = new URL('/garage', serverUrl);
 
   const newCar = await carObject;
-  console.log(await newCar);
 
   try {
     fetch(url, {
@@ -24,14 +24,9 @@ async function addCarToServer(carObject: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newCar),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Успешно добавлено:', data);
-      });
+    }).then(response => response.json());
   } catch (error) {
-    console.error('Failed to add car to server:', error);
-    throw error;
+    throw new Error(`'Failed to add car to server:'${error}`);
   }
 }
 
@@ -49,25 +44,22 @@ export async function deleteServerCar(carId: number) {
     });
 
     if (!response.ok) {
-      throw new Error(`Ошибка HTTP: ${response.status}`);
+      throw new Error(`HTTP Error: ${response.status}`);
     }
 
     if (response.status === 204) {
-      console.log(`Объект с ID=${carId} успешно удален (статус 204)`);
       return null;
     }
 
     const data = await response.json();
-    console.log('Объект успешно удален:', data);
 
-    if (containerChilde < 7 && cars > 7) {
+    if (containerChilde < PAGE_LENGTH && cars > PAGE_LENGTH) {
       clearCarsContainer();
       createCarsPage(garagePages.PAGE_NUMBER);
     }
     return data;
   } catch (error) {
-    console.error('Ошибка при удалении:', error);
-    throw error;
+    throw new Error(`Error during deletion:${error}`);
   }
 }
 

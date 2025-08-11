@@ -42,8 +42,7 @@ async function updateWinnersOnServer(id: number): Promise<void> {
       );
     }
   } catch (error) {
-    console.error('Error updating winners:', error);
-    throw error;
+    throw new Error(`Error updating winners:${error}`);
   }
 }
 
@@ -65,8 +64,7 @@ export async function deleteWinnerFromServer(id: number): Promise<void> {
       throw new Error(`Unexpected response status: ${response.status}`);
     }
   } catch (error) {
-    console.error(`Error deleting winner with id ${id}:`, error);
-    throw error;
+    throw new Error(`Error deleting winner with id ${id}:${error}`);
   }
 }
 

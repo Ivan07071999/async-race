@@ -1,4 +1,9 @@
 import getCars, { type ICar } from '../store/garage/garageThunks';
+import carImage from '../assets/drag-race-car.svg';
+import flagImage from '../assets/flag.png';
+
+export const dragRaceCar = carImage;
+export const flagIMG = flagImage;
 
 export const carsModels = [
   'Toyota',

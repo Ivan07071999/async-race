@@ -12,7 +12,6 @@ function startTimer() {
   if (TIMER.status && startTime === null) {
     startTime = Date.now();
   }
-  console.log(TIMER.time, TIMER.status, 'start');
 }
 
 function stopTimer() {
@@ -32,7 +31,6 @@ function stopTimer() {
     }
     startTime = null;
   }
-  console.log(TIMER.time, TIMER.status, 'stop');
 }
 
 function controlTimer() {

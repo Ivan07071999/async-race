@@ -1,6 +1,3 @@
-// import type { ICar } from '../store/garage/garageThunks';
-// import { carsArray } from './data';
-
 const selectedCar = {
   modelContainer: 0,
   carModel: 4,
@@ -27,14 +24,13 @@ export async function updateServerCar(
     });
 
     if (!response.ok) {
-      throw new Error(`Ошибка HTTP: ${response.status}`);
+      throw new Error(`HTTP error: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log('Объект успешно обновлен:', data);
     return data;
   } catch (error) {
-    console.error('Ошибка при обновлении:', error);
+    throw new Error(`Error during update:${error}`);
   }
 }
 

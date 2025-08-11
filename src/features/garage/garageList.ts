@@ -4,11 +4,13 @@ import { type ICar } from '../../store/garage/garageThunks';
 
 async function createCarsList() {
   const data = await getCars<ICar[]>();
-  console.log(data, 'data');
+
+  const limitedData = data.slice(0, 7);
+
   const carElements = await Promise.all(
-    data.map(item => createCarItem(item.name, item.color, item.id))
+    limitedData.map(item => createCarItem(item.name, item.color, item.id))
   );
-  console.log(carElements, 'car element');
+
   return carElements;
 }
 

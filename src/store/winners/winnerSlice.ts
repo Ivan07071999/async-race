@@ -1,17 +1,5 @@
-import { createRowElements } from '../../features/winners/winnerRow';
 import { loadSVG, cleanSVG } from '../../features/garage/garageItem';
-
-let sortingUpDirection: boolean = true;
-
-type winCar = {
-  name: string;
-  color: string;
-  data: {
-    id: number;
-    wins: number;
-    time: number;
-  };
-};
+import type { winCar } from '../../types/winners';
 
 export async function getWinnersFromServer(): Promise<
   Array<{ id: number; wins: number; time: number }>
@@ -110,63 +98,4 @@ export async function getSVG() {
   const svgElement = await loadSVG('/src/assets/drag-race-car.svg');
   cleanSVG(svgElement);
   return svgElement;
-}
-
-export async function appendWinners() {
-  const winnersContainer = document.querySelector('.winners-info');
-
-  if (!winnersContainer) {
-    console.error('Container not found');
-    return;
-  }
-
-  const data = await formWinnersObject();
-
-  data.forEach(async (item, ind) => {
-    const rowElement = await createRowElements(
-      String(ind + 1),
-      '',
-      item.name,
-      String(item.data.wins),
-      String(item.data.time)
-    );
-
-    const carSVG = rowElement.children[1].children[0];
-    carSVG.setAttribute('fill', item.color);
-
-    winnersContainer.appendChild(rowElement);
-  });
-}
-
-export async function sortWinnersForTime() {
-  const winners = await formWinnersObject();
-  console.log(winners, 'win');
-  let sortedUp;
-
-  if (sortingUpDirection === true) {
-    sortedUp = winners.sort((a, b) => a.data.time - b.data.time);
-    sortingUpDirection = false;
-  } else {
-    sortedUp = winners.sort((a, b) => b.data.time - a.data.time);
-    sortingUpDirection = true;
-  }
-
-  return sortedUp;
-}
-
-export async function sortWinnersForWins() {
-  const winners = await formWinnersObject();
-  console.log(winners, 'win');
-  let sortedUp;
-
-  if (sortingUpDirection === true) {
-    sortedUp = winners.sort((a, b) => a.data.wins - b.data.wins);
-    sortingUpDirection = false;
-  } else {
-    sortedUp = winners.sort((a, b) => b.data.wins - a.data.wins);
-    sortingUpDirection = true;
-  }
-  console.log(sortedUp, 'up');
-
-  return sortedUp;
 }

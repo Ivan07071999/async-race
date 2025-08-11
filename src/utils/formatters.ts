@@ -1,5 +1,6 @@
 import createCarItem from '../features/garage/garageItem';
-import { garagePages } from '../features/garage/garageCreateCars';
+import { updateHeadElement } from './headElements';
+import { PAGE_LENGTH } from './data';
 
 export function createCarObject(
   carModel: string,
@@ -27,8 +28,8 @@ export async function createNewCar(): Promise<
   const carList = document.querySelectorAll('.car-wrapper');
   const carsContainer = document.querySelector('.form-car');
   const lastChild = carsContainer?.children[carsContainer.children.length - 1];
-  const carsLength = document.querySelector('h1') as HTMLElement;
-  carsLength.textContent = `Garage(${(garagePages.carsNumber += 1)})`;
+
+  updateHeadElement();
 
   let newIdNumber;
 
@@ -44,7 +45,7 @@ export async function createNewCar(): Promise<
   ) {
     const newCar = createCarObject(carModel.value, colorCar.value);
 
-    if (carList.length < 7) {
+    if (carList.length < PAGE_LENGTH) {
       carsContainer?.appendChild(
         await createCarItem(newCar.name, newCar.color, newIdNumber)
       );

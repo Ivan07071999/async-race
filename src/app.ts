@@ -3,15 +3,15 @@ import { createHeaderButtons } from './components/ui/button';
 import createFooter from './components/layout/footer';
 import { createForm } from './components/ui/form';
 import { createLabelAndInput } from './components/ui/input';
-import getCars from './store/garage/garageThunks';
-import { type ICar } from './store/garage/garageThunks';
 import createGaragePage from './features/garage/garagePage';
 import {
   disabledNextButton,
   disabledPreviewButton,
   disableGarageButton,
   disableWinnersButton,
+  enabledNextButton,
 } from './utils/disableButtons';
+import getCars, { type ICar } from './store/garage/garageThunks';
 
 const container = document.querySelector('#app');
 const header = createHeader();
@@ -20,6 +20,7 @@ const buttons = createHeaderButtons();
 const form = createForm();
 const createLabelAndInputElement = createLabelAndInput();
 const GARAGE = createGaragePage();
+const numberCar = await getCars<ICar[]>();
 
 async function appendTo(): Promise<void> {
   container?.appendChild(header);
@@ -46,12 +47,13 @@ async function appendTo(): Promise<void> {
 
   form.footerForm.appendChild(buttons.prev);
   form.footerForm.appendChild(buttons.next);
-  getCars<ICar[]>();
   disabledNextButton();
   disabledPreviewButton();
   disableWinnersButton();
   disableGarageButton();
-  // timeSort?.addEventListener('click', () => console.log('fsd'))
+  if (numberCar.length > 7) {
+    enabledNextButton();
+  }
 }
 
 export default appendTo;

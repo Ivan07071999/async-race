@@ -46,15 +46,11 @@ export function enabledNextButton() {
 }
 
 export async function disabledButtons(page: number) {
-  let lastPage: number = Math.floor(
-    ((await getCars<ICar[]>()).length ?? 0) / 7
-  );
-  // const newLastPage = lastPage % 7 !== 0 ? (lastPage -= 1) : lastPage;
-  if ((await getCars<ICar[]>()).length % 7 === 0) {
-    lastPage -= 1;
-  }
-  console.log(garagePages.PAGE_NUMBER, lastPage);
-  // console.log(await carsArray);
+  const allCars = await getCars<ICar[]>();
+  let numberOfPages: number = Math.floor((allCars.length ?? 0) / 7);
+
+  const lastPage: number =
+    allCars.length % 7 === 0 ? (numberOfPages -= 1) : numberOfPages;
 
   switch (page) {
     case 0:
@@ -161,4 +157,24 @@ export function enableCarButtons(): void {
     container.style.pointerEvents = 'auto';
     container.style.opacity = '1.0';
   });
+}
+
+export function disableRaseButton() {
+  const raceButton = document.querySelector(
+    '.button-race'
+  ) as HTMLButtonElement;
+
+  raceButton.disabled = true;
+  raceButton.style.opacity = '0.5';
+  raceButton.style.pointerEvents = 'none';
+}
+
+export function enableRaseButton() {
+  const raceButton = document.querySelector(
+    '.button-race'
+  ) as HTMLButtonElement;
+
+  raceButton.disabled = false;
+  raceButton.style.opacity = '1.0';
+  raceButton.style.pointerEvents = 'auto';
 }

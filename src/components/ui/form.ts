@@ -1,9 +1,4 @@
-type FormType = {
-  headerTop: HTMLDivElement;
-  headerMiddle: HTMLDivElement;
-  headerBottom: HTMLDivElement;
-  footerForm: HTMLDivElement;
-};
+import type { FormType } from '../../types/garage';
 
 function createFormElement(formClass: string): HTMLDivElement {
   const form = document.createElement('div');

@@ -27,6 +27,7 @@ export async function createRowElements(
   if (car.textContent === '') {
     car.appendChild(svgElement);
   }
+
   const name: HTMLDivElement = document.createElement('div');
   name.className = 'winner-name';
   name.textContent = nameText;

@@ -1,48 +1,9 @@
 import { createHeaderButtons } from '../../components/ui/button';
-import getCars from '../../store/garage/garageThunks';
 import selectedCar from '../../utils/validator';
-import { startAndAnimateCar, stopCarEngine } from '../engine/enginePage';
-import { createCarsPage, garagePages } from './garageCreateCars';
-import clearCarsContainer from '../../utils/clear';
-import { type ICar } from '../../store/garage/garageThunks';
+import { startAndAnimateCar } from '../engine/enginePage';
+import { stopCarEngine } from '../engine/engineControls';
 import { deleteWinnerFromServer } from '../../store/winners/winnersThunks';
-
-export async function deleteServerCar(carId: number) {
-  const carsLength = document.querySelector('h1') as HTMLElement;
-  carsLength.textContent = `Garage(${(garagePages.carsNumber -= 1)})`;
-  const carsContainer = document.querySelector('.form-car')!;
-  const containerChilde: number = carsContainer?.childNodes.length;
-  const cars = (await getCars<ICar[]>()).length;
-  try {
-    const serverUrl = 'http://localhost:3000';
-    const url = new URL(`/garage/${carId}`, serverUrl);
-
-    const response = await fetch(url, {
-      method: 'DELETE',
-    });
-
-    if (!response.ok) {
-      throw new Error(`Ошибка HTTP: ${response.status}`);
-    }
-
-    if (response.status === 204) {
-      console.log(`Объект с ID=${carId} успешно удален (статус 204)`);
-      return null;
-    }
-
-    const data = await response.json();
-    console.log('Объект успешно удален:', data);
-
-    if (containerChilde < 7 && cars > 7) {
-      clearCarsContainer();
-      createCarsPage(garagePages.PAGE_NUMBER);
-    }
-    return data;
-  } catch (error) {
-    console.error('Ошибка при удалении:', error);
-    throw error; // Пробрасываем ошибку дальше для обработки
-  }
-}
+import { deleteServerCar } from '../../store/garage/garageSlice';
 
 export async function loadSVG(url: RequestInfo | URL) {
   const response = await fetch(url);
@@ -86,7 +47,7 @@ export async function createCarItem(
 
   A.className = 'button-control button-start';
   B.className = 'button-control button-stop';
-  remove.className = 'button-change';
+  remove.className = 'button-change remove';
   select.className = 'button-change';
 
   remove.addEventListener('click', async () => {
@@ -97,7 +58,6 @@ export async function createCarItem(
 
   select.addEventListener('click', async () => {
     selectedCar.id = ID;
-    console.log(ID);
   });
 
   A.addEventListener('click', () => startAndAnimateCar(ID, svgElement));

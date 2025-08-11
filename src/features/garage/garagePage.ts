@@ -1,12 +1,16 @@
 import createCarForm from './createCarForm';
 import { type ICar } from '../../store/garage/garageThunks';
+import getCars from '../../store/garage/garageThunks';
+import { garagePages } from './garageCreateCars';
 
 async function createGaragePage() {
+  const numberCar = await getCars<ICar[]>();
   const garage = document.createElement('section');
   const head = document.createElement('h1');
   const subHead = document.createElement('h3');
   garage.className = 'garage';
-  head.textContent = 'Garage(4)';
+  head.textContent = `Garage(${numberCar.length})`;
+  garagePages.carsNumber = numberCar.length;
   subHead.textContent = 'Page #1';
   garage.appendChild(head);
   garage.appendChild(subHead);

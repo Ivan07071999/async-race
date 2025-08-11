@@ -1,46 +1,15 @@
 import { updateCar } from '../../utils/validator';
 import {
-  generate100Cars,
-  createCarsPage,
-  garagePages,
-  addCarToServer,
-} from '../../features/garage/garageCreateCars';
-import clearCarsContainer, { clearHeads } from '../../utils/clear';
-import {
-  disableCarButtons,
-  disabledButtons,
-  disabledNextButton,
-  disabledPreviewButton,
-  disableGarageButton,
-  disableHeaderForms,
-  disableWinnersButton,
-  enabledNextButton,
-  enableGarageButton,
-  enableHeaderForms,
-  enableWinnersButton,
-} from '../../utils/disableButtons';
-import startRace from '../../features/engine/engineControls';
-import createNewCar from '../../utils/formatters';
-import { type ICar } from '../../store/garage/garageThunks';
-import getCars from '../../store/garage/garageThunks';
-import openWinnersPage from '../../features/winners/winnersPage';
-import { sortWinnersForTime } from '../../store/winners/winnerSlice';
-
-type ButtonsType = {
-  winners: HTMLButtonElement;
-  garage: HTMLButtonElement;
-  race: HTMLButtonElement;
-  reset: HTMLButtonElement;
-  generate: HTMLButtonElement;
-  create: HTMLButtonElement;
-  update: HTMLButtonElement;
-  next: HTMLButtonElement;
-  prev: HTMLButtonElement;
-  select: HTMLButtonElement;
-  remove: HTMLButtonElement;
-  a: HTMLButtonElement;
-  b: HTMLButtonElement;
-};
+  nextButtonEvent,
+  previousButtonEvent,
+  raceButtonEvent,
+  generateCarsEvent,
+  createNewCarEvent,
+  winnersButtonEvent,
+  garageButtonEvent,
+  resetButtonEvent,
+} from '../../utils/logicButtonsEvents';
+import type { ButtonsType } from '../../types/garage';
 
 export function createButton(
   text: string,
@@ -70,69 +39,15 @@ export function createHeaderButtons(): ButtonsType {
   const A = createButton('A', 'button-car-logic');
   const B = createButton('B', 'button-car-logic');
 
-  garageButton.addEventListener('click', () => {
-    openWinnersPage();
-    disableHeaderForms();
-    disableWinnersButton();
-    enableGarageButton();
-    clearHeads();
-    sortWinnersForTime();
-  });
-
-  winnersButton.addEventListener('click', () => {
-    clearCarsContainer();
-    createCarsPage(garagePages.PAGE_NUMBER);
-    enableHeaderForms();
-    disableGarageButton();
-    enableWinnersButton();
-    clearHeads();
-  });
-
-  createCarButton.addEventListener('click', () =>
-    createNewCar().then(async newCar => {
-      if (newCar) {
-        await addCarToServer(newCar);
-        if ((await getCars<ICar[]>()).length > 7) enabledNextButton();
-      }
-    })
-  );
+  garageButton.addEventListener('click', () => garageButtonEvent());
+  winnersButton.addEventListener('click', () => winnersButtonEvent());
+  createCarButton.addEventListener('click', () => createNewCarEvent());
   updateCarButton.addEventListener('click', () => updateCar());
-  generateCarsButton.addEventListener('click', () => {
-    generate100Cars()
-      .then(() => clearCarsContainer())
-      .then(() => createCarsPage(garagePages.PAGE_NUMBER))
-      .then(() => {
-        console.log('Все операции выполнены успешно');
-        enabledNextButton();
-      })
-      .catch(error => {
-        console.error('Произошла ошибка:', error);
-      });
-  });
-
-  nextButton.addEventListener('click', () => {
-    clearCarsContainer();
-    garagePages.PAGE_NUMBER += 1;
-    createCarsPage(garagePages.PAGE_NUMBER);
-    disabledButtons(garagePages.PAGE_NUMBER);
-  });
-
-  prevButton.addEventListener('click', () => {
-    clearCarsContainer();
-    garagePages.PAGE_NUMBER -= 1;
-    createCarsPage(garagePages.PAGE_NUMBER);
-    disabledButtons(garagePages.PAGE_NUMBER);
-  });
-
-  raceButton.addEventListener('click', () => {
-    startRace('button-start');
-    disableWinnersButton();
-    disabledNextButton();
-    disabledPreviewButton();
-    disableHeaderForms();
-    disableCarButtons();
-  });
-  resetButton.addEventListener('click', () => startRace('button-stop'));
+  generateCarsButton.addEventListener('click', () => generateCarsEvent());
+  nextButton.addEventListener('click', () => nextButtonEvent());
+  prevButton.addEventListener('click', () => previousButtonEvent());
+  raceButton.addEventListener('click', () => raceButtonEvent());
+  resetButton.addEventListener('click', () => resetButtonEvent());
 
   return {
     winners: winnersButton,

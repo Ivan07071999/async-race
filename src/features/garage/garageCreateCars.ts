@@ -1,12 +1,16 @@
-import { carsColors, carsModels, carsArray } from '../../utils/data';
+import { carsColors, carsModels, PAGE_LENGTH } from '../../utils/data';
 import createCarItem from './garageItem';
 import getCars, { type ICar } from '../../store/garage/garageThunks';
-
+import addCarToServer from '../../store/garage/garageSlice';
 import {
   enabledNextButton,
   disabledButtons,
   enabledButtonPreview,
 } from '../../utils/disableButtons';
+import {
+  updateHeadElement,
+  updateSubheadElement,
+} from '../../utils/headElements';
 
 export const garagePages = {
   count: 0,
@@ -15,15 +19,14 @@ export const garagePages = {
 };
 
 export async function createCarsPage(page: number) {
-  const pageNumber = document.querySelector('h3') as HTMLElement;
-  pageNumber.textContent = `Page #${garagePages.PAGE_NUMBER + 1}`;
-
+  updateSubheadElement();
   const clearedCarsContainer =
     document.querySelector<HTMLDivElement>('.form-car')!;
-
   const data: ICar[] = await getCars();
-
-  const currentPAge: ICar[] = (await data).slice(page * 7, page * 7 + 7);
+  const currentPAge: ICar[] = (await data).slice(
+    page * PAGE_LENGTH,
+    page * PAGE_LENGTH + PAGE_LENGTH
+  );
   console.log(currentPAge);
 
   const carElements = await Promise.all(
@@ -33,8 +36,8 @@ export async function createCarsPage(page: number) {
       )
     )
   );
-  // console.log(carElements, 'car element');
-  if ((await data).length > 7) {
+
+  if ((await data).length > PAGE_LENGTH) {
     enabledNextButton();
   }
 
@@ -45,44 +48,13 @@ export async function createCarsPage(page: number) {
   return carElements;
 }
 
-export async function addCarToServer(carObject: {
-  name: string;
-  color: string;
-}): Promise<void> {
-  const serverUrl = 'http://localhost:3000';
-  const url = new URL('/garage', serverUrl);
-
-  // const newCar = await createNewCar();
-  const newCar = await carObject;
-  console.log(await newCar);
-
-  try {
-    fetch(url, {
-      method: 'POST', // Метод для добавления данных
-      headers: {
-        'Content-Type': 'application/json', // Указываем формат данных
-      },
-      body: JSON.stringify(newCar), // Преобразуем объект в JSON
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Успешно добавлено:', data);
-      });
-    console.log(await carsArray, 'newArr');
-  } catch (error) {
-    console.error('Failed to add car to server:', error);
-    throw error;
-  }
-}
-
 function createRandomCar(): {
   name: string;
   color: string;
 } {
   const randomIndex: number = Math.floor(Math.random() * 20);
 
-  const carsLength = document.querySelector('h1') as HTMLElement;
-  carsLength.textContent = `Garage(${(garagePages.carsNumber += 1)})`;
+  updateHeadElement();
 
   return {
     name: carsModels[randomIndex],
@@ -100,10 +72,4 @@ export async function generate100Cars<T>(): Promise<T | undefined> {
   garagePages.count += 1;
 
   return generate100Cars();
-}
-
-export function handlePageLoad(): void {
-  console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-  createCarsPage(garagePages.PAGE_NUMBER);
-  console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 }

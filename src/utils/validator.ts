@@ -1,5 +1,5 @@
 // import type { ICar } from '../store/garage/garageThunks';
-import { carsArray } from './data';
+// import { carsArray } from './data';
 
 const selectedCar = {
   modelContainer: 0,
@@ -41,7 +41,7 @@ export async function updateServerCar(
 export async function updateCar(): Promise<void> {
   const currentCar = document.getElementById(`${selectedCar.id}`);
   const carIndex = selectedCar.id;
-  const cars = await carsArray;
+
   const selectColor: HTMLInputElement = document.querySelector('#inputID-4')!;
   const selectModel: HTMLInputElement = document.querySelector('#inputID-2')!;
 
@@ -64,5 +64,4 @@ export async function updateCar(): Promise<void> {
   });
 
   selectModel.value = '';
-  console.log(await cars);
 }
